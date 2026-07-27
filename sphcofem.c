@@ -1055,7 +1055,7 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 
-		/* test on nearest neighbour search (0 = each cycle, 1 = once at beginning, N = each nopt cycles) */
+		/* test on nearest neighbour search (0 = each cycle, 1 = once at beginning, N = each nnopt cycles) */
 		if ((nnopt!=0)&&(nnopt!=(int)nnopt))
 		{
 			fprintf(msg,
