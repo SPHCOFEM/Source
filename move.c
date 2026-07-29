@@ -1247,10 +1247,10 @@ void move(int *num_m,int *type_m,
 					p_s[i]=100.0*rho_m[mat_s[i]]*sqr(v_max)/gamma_m[mat_s[i]]*(pow((rho_s[i]/rho_m[mat_s[i]]),gamma_m[mat_s[i]])-1.0);
 					break;
 				}
-				case 23: // Mie-Grueneisen EOS for liquid
-				case 27: // Mie-Grueneisen EOS for solid
+				case 23: /* Mie-Grueneisen EOS for liquid (case 23 executes exactly same code as case 27) */
+				case 27: /* Mie-Grueneisen EOS for solid */
 				{
-					c_s[i]=10.0*v_max; // sound speed
+					//c_s[i]=10.0*v_max; // sound speed
 					s=coef1_m[mat_s[i]]; // linear coefficient of Hugoniot (1.87)
 					G0=coef2_m[mat_s[i]]; // Grueneisen constant (0.17)
 

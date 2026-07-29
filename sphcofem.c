@@ -4165,14 +4165,30 @@ int main(int argc,char *argv[])
 							(pow(rho_s[i]/rho_m[j],gamma_m[j])-1.0);
                     	break;
               	  	}
-              		case 23: /* Mie-Grueneisen EOS */
-					/* {
+              		case 23: /* SPH with Mie-Grueneisen EOS */
+					{
               	    	if (v_max==0) c_s[i]=10.0;
 						else c_s[i]=10.0*v_max;
-					} */
+
+						s=coef1_m[mat_s[j]]; // linear coefficient of Hugoniot
+						G0=coef2_m[mat_s[j]]; // Grueneisen constant
+
+	            		C0=kappa_m[mat_s[j]]; // initial pressure
+	            		C1=rho_m[mat_s[j]]*sqr(c_s[i])-G0/2.0*kappa_m[mat_s[j]];
+	            		C2=rho_m[mat_s[j]]*sqr(c_s[i])*(2.0*s-1.0)-
+							G0/2.0*rho_m[mat_s[j]]*sqr(c_s[i]);
+	            		C3=rho_m[mat_s[j]]*sqr(c_s[i])*(2.0*s-1.0)*(3.0*s-1.0)-
+							G0/2.0*rho_m[mat_s[j]]*sqr(c_s[i])*(2.0*s-1.0);
+	            		C4=G0;C5=G0;En=0.0; // energy per unit of initial volume
+	            		Eta=rho_s[i]/rho_m[mat_s[j]]-1.0;
+
+						/* initial pressure (Taddei, 2015; Frissane, 2019) */
+				    	if (Eta>=0) p_s[i]=C0+C1*Eta+C2*sqr(Eta)+C3*pow(Eta,3.0)+(C4+C5*Eta)*En;
+						else p_s[i]=C0+C1*Eta;
+                    	break;
+					}
               		case 27: /* SPS with Mie-Grueneisen EOS */
               	  	{
-						// initial sound speed = sqrt(bulk modulus over initial density)
 						//c_s[i]=sqrt(T_m[j]*gamma_m[j]/rho_m[j]);
 						c_s[i]=sqrt(T_m[j]/rho_m[j]);
 
