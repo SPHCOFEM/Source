@@ -3605,7 +3605,7 @@ int main(int argc,char *argv[])
 					num_m[i]);
 				return(0);
 			}
-			if ((mu_m[i]<0.0)&&(mu_m[i]>0.5)&&(type_m[i]>3)&&(type_m[i]<7))
+			if ((mu_m[i]<0.0)||(mu_m[i]>0.5)&&(type_m[i]>3)&&(type_m[i]<7))
 			{
 				fprintf(stdout,
 					"ERROR: Poisson's ratio of material %d must be between 0 and 0.5!"
