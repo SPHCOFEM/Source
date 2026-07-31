@@ -3620,7 +3620,7 @@ int main(int argc,char *argv[])
 			if ((mu_m[i]<0.0)&&(type_m[i]>3)&&(type_m[i]<7))
 			{
 				fprintf(stdout,
-					"ERROR: Shear modulus of material %d be a positive value!"
+					"ERROR: Shear modulus of material %d must be a positive value!"
 					"\n"
 					"\n"
 					"error termination"
@@ -3634,7 +3634,7 @@ int main(int argc,char *argv[])
 			if ((T_m[i]<=0.0)&&(type_m[i]==1))
 			{
 				fprintf(stdout,
-					"ERROR: absolute temperature of material %d be a positive value!"
+					"ERROR: absolute temperature of material %d must be a positive value!"
 					"\n"
 					"\n"
 					"error termination"
@@ -3646,7 +3646,7 @@ int main(int argc,char *argv[])
 			if ((T_m[i]<=0.0)&&(type_m[i]>3)&&(type_m[i]<7))
 			{
 				fprintf(stdout,
-					"ERROR: Young's modulus of material %d be a positive value!"
+					"ERROR: Young's modulus of material %d must be a positive value!"
 					"\n"
 					"\n"
 					"error termination"
@@ -3658,7 +3658,7 @@ int main(int argc,char *argv[])
 			if ((T_m[i]<=0.0)&&(type_m[i]>3)&&(type_m[i]<7))
 			{
 				fprintf(stdout,
-					"ERROR: bulk modulus of material %d be a positive value!"
+					"ERROR: bulk modulus of material %d must be a positive value!"
 					"\n"
 					"\n"
 					"error termination"
