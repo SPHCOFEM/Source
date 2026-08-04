@@ -12,14 +12,17 @@ https://github.com/orgs/SPHCOFEM
 
 /* ToDo
 -> rotation velocity (matrix multiplication) -> updated Lagrangean
+-> null material for FEM (for contact and filling purposes)
 -> hyperelastic material
 -> contact damping
+-> nodal added mass
 -> kinematic contact (just move particles)
 -> test triangles and quads in 2D
 -> rigid body element volume in 3D (mark difference between rectangle and tetrahedron)
 -> rigid body dynamics (angular motion and forces and moments from particles and nodes to centre of gravity)
 -> total Lagrangean formulation (initial kernel w and rho at t = 0)
 -> model and results save and view in Python
+-> development manual with description of functions
 
 -> t_s[n_s] as a particle type (0 = domain, 1 = interface, 2 = wall)
 -> optionally change between small and large deformations

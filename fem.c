@@ -230,7 +230,7 @@ void large_deformations(int *type_m,
 							vavx=(v_b[nod_e[i]]+v_b[nod_e[i+n_e]]+v_b[nod_e[i+2*n_e]])/3.0;
 							vavy=(v_b[nod_e[i]+n_b]+v_b[nod_e[i+n_e]+n_b]+v_b[nod_e[i+2*n_e]+n_b])/3.0;
 						}
-						else /* rectangle */
+						else /* quad */
 						{
 							x1=x_b[nod_e[i]];
 							x2=x_b[nod_e[i+n_e]];
@@ -384,7 +384,7 @@ void large_deformations(int *type_m,
 							.
 							*/
 						}
-						else /* rectangle */
+						else /* quad */
 						{
 							x1=x_b[nod_e[i]];
 							x2=x_b[nod_e[i+n_e]];
@@ -545,7 +545,7 @@ void large_deformations(int *type_m,
 							.
 							*/
 						}
-						else /* rectangle */
+						else /* quad */
 						{
 							x1=x_b[nod_e[i]];
 							x2=x_b[nod_e[i+n_e]];
@@ -891,7 +891,7 @@ void mass_stiffness_damping(int *type_m,
 							ind[4]=nod_e[i+n_e]+n_b;
 							ind[5]=nod_e[i+2*n_e]+n_b;
 						}
-		  				else /* rectangle */
+		  				else /* quad */
 		    			{
 							x1=x_b[nod_e[i]];
 							x2=x_b[nod_e[i+n_e]];
@@ -1233,7 +1233,7 @@ void mass_stiffness(int *type_m,
 							ind[4]=nod_e[i+n_e]+n_b;
 							ind[5]=nod_e[i+2*n_e]+n_b;
 						}
-		  				else /* rectangle */
+		  				else /* quad */
 		    			{
 							x1=x_b[nod_e[i]];
 							x2=x_b[nod_e[i+n_e]];
@@ -1554,7 +1554,7 @@ void damping_rhs(int *type_m,
 							vavx=(v_b[nod_e[i]]+v_b[nod_e[i+n_e]]+v_b[nod_e[i+2*n_e]])/3.0;
 							vavy=(v_b[nod_e[i]+n_b]+v_b[nod_e[i+n_e]+n_b]+v_b[nod_e[i+2*n_e]+n_b])/3.0;
 		    			}
-		  				else /* rectangle */
+		  				else /* quad */
 		    			{
 		      				/* element matrix size */
 		      				h=8;
@@ -1844,7 +1844,7 @@ void rhs(int *type_m,
 							ind[4]=nod_e[i+n_e]+n_b;
 							ind[5]=nod_e[i+2*n_e]+n_b;
 		    			}
-		  				else /* rectangle */
+		  				else /* quad */
 		    			{
 							/* element matrix size */
 							h=8;
