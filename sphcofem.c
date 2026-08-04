@@ -15,7 +15,7 @@ https://github.com/orgs/SPHCOFEM
 -> null material for FEM (for contact and filling purposes)
 -> hyperelastic material
 -> contact damping
--> nodal added mass
+-> nodal added mass (to particles and nodes)
 -> kinematic contact (just move particles)
 -> test triangles and quads in 2D
 -> rigid body element volume in 3D (mark difference between rectangle and tetrahedron)
