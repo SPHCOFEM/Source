@@ -8,6 +8,7 @@ https://github.com/orgs/SPHCOFEM
 -> predictor-corrector (2) ustable for broken dam 
 -> tetrahedron elasticity does not work
 -> predictor-corrector leapfrog (3) does not update positions
+-> non-existing material number leads to message "ERROR: material number %d in element %d is not defined!"
 */
 
 /* ToDo
@@ -137,8 +138,8 @@ int main(int argc,char *argv[])
   	char keyword[10],output[80],textout[80],msgout[80],logout[80];
 	char dt_max_type[20],dt_save_type[20];
 	char data_check_type[20],data_print_type[20],mem_check_type[20];
-	char nns_type[20],opt_type[20],int_scheme[40],xsph[20],is_type[40];
-	char contact_type[40],ct_type[20];
+	char nns_type[40],opt_type[40],int_scheme[40],xsph[40],is_type[40];
+	char contact_type[40],ct_type[40];
 	char rb_type[40];
 
 	/* switches */
@@ -3608,7 +3609,7 @@ int main(int argc,char *argv[])
 					num_m[i]);
 				return(0);
 			}
-			if ((mu_m[i]<0.0)||(mu_m[i]>0.5)&&(type_m[i]>3)&&(type_m[i]<7))
+			if ((mu_m[i]<0.0)||((mu_m[i]>0.5)&&(type_m[i]>3)&&(type_m[i]<7)))
 			{
 				fprintf(stdout,
 					"ERROR: Poisson's ratio of material %d must be between 0 and 0.5!"
@@ -4267,7 +4268,7 @@ int main(int argc,char *argv[])
 				"error termination"
 				"\n"
 		  		"\n",
-		  		num_m[mat_e[i]],num_b[i]);
+		  		mat_e[i],num_e[i]);
 	  		return(0);
 		}
       	imate=0;
