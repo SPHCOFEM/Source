@@ -64,9 +64,17 @@ double time_step(int *type_m,
   	double nx,ny,nz,ux,uy,uz,vx,vy,vz;
 
 	/* reset v_max to very small number */
-	if (integration!=0)
+	if (integration!=0) // not necessary for Euler integration scheme
 	{
 		*v_max=1e-9;
+
+		/* v_max is needed for time step calculation for SPS 
+		for (i=0;i<n_s;i++)
+		{
+			v=norm(v_s[i],v_s[i+n_s],v_s[i+2*n_s]);
+			if (v>*v_max) *v_max=v;
+		}
+		*/
 	}
 
 	/* time step depending on previous one always decreases
@@ -76,13 +84,29 @@ double time_step(int *type_m,
 	{
 		dt=dt_max;
 	}
-  
+
   	for (i=0;i<n_s;i++)
     {
 		if (type_m[mat_s[i]]>0)
 		{
 			/* minimum time step */
-			dt_min=cour*h_s[i]/(c_s[i]+0.6*(alpha*c_s[i]+beta*mu_m[mat_s[i]]));
+			if ((type_m[mat_s[i]]==7)||(type_m[mat_s[i]]==27)) // SPS
+			{
+				//dt_min=cour*h_s[i]/c_s[i]; // -> large translation
+				//dt_min=cour*h_s[i]/sqrt(rho_s[i]/(T_m[mat_s[i]]+4.0/3.0*mu_m[mat_s[i]])); // -> large translation
+				/* alpha ~ linear dissipation (oscillations, moderate compression)
+				   beta ~ quadratic dissipation (strong compression, shocks, high relative velocity) */
+				/* alpha avoids large translation
+				   here mu is not viscosity, but shear modulus
+				   -> brings high contribution to denominator
+				   -> beta set to zero */
+				dt_min=cour*h_s[i]/(c_s[i]+0.6*alpha*c_s[i]);
+			}
+			else // SPH
+			{
+				dt_min=cour*h_s[i]/(c_s[i]+0.6*(alpha*c_s[i]+beta*mu_m[mat_s[i]]));
+			}
+
 			if (dt_min<dt) dt=dt_min;
 
 			/* maximum velocity for predictor movement */
