@@ -100,7 +100,7 @@ double time_step(int *type_m,
 				   here mu is not viscosity, but shear modulus
 				   -> brings high contribution to denominator
 				   -> beta set to zero */
-				dt_min=cour*h_s[i]/(c_s[i]+0.6*alpha*c_s[i]);
+				dt_min=cour*h_s[i]/((1.0+0.6*alpha)*c_s[i]);
 			}
 			else // SPH
 			{

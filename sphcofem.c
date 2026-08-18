@@ -2095,7 +2095,7 @@ int main(int argc,char *argv[])
 	/* particles coordinates */
 	for (i=0;i<n_s;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			// rotation psi(0) = 0
 			x_s[i+2*n_s]=0.0; // coordinate z
@@ -2110,7 +2110,7 @@ int main(int argc,char *argv[])
 	/* nodal coordinates */
 	for (i=0;i<n_b;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			x_b[i+2*n_b]=0.0; // coordinate z
 		}
@@ -2123,7 +2123,7 @@ int main(int argc,char *argv[])
 	/* initial velocities and rotational velocities */
 	for (i=0;i<n_v;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			v_0[i+2*n_v]=0.0; // translational velocity z
 			omega_0[i+2*n_v]=0.0; // rotational velocity z
@@ -2139,7 +2139,7 @@ int main(int argc,char *argv[])
 	/* boundary acceleration fields */
 	for (i=0;i<n_a;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			a_0[i+2*n_a]=0; // acceleration z
 		}
@@ -2152,7 +2152,7 @@ int main(int argc,char *argv[])
 	/* boundary forces and moments */
 	for (i=0;i<n_f;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			f_0[i+2*n_f]=0; // force z
 			M_0[i+2*n_f]=0; // moment z
@@ -2168,7 +2168,7 @@ int main(int argc,char *argv[])
 	/* nodal dampings */
 	for (i=0;i<n_d;i++)
 	{
-		if (dim<3) // 2D
+		if (dim<3) // 3D -> 2D
 		{
 			d_0[i+2*n_d]=0.0; // damping z
 		}
@@ -2181,7 +2181,7 @@ int main(int argc,char *argv[])
 	/* particles boundary conditions */
 	for (i=0;i<n_o;i++)
 	{
-		if (dim<3) // 2D 
+		if (dim<3) // 3D -> 2D 
 		{
 			o_0[i+2*n_o]=0; // translation z
 			o_0[i+5*n_o]=0; // rotation z
@@ -2231,7 +2231,10 @@ int main(int argc,char *argv[])
       	/* test on coincident particles */
       	for (j=i+1;j<n_s;j++)
 		{
-			if ((x_s[i]==x_s[j])&&(x_s[i+n_s]==x_s[j+n_s])&&(x_s[i+2*n_s]==x_s[j+2*n_s]))
+			/* for dim < 3 all remaining coordinates = 0 */
+			if (((dim==3)&&(x_s[i]==x_s[j])&&(x_s[i+n_s]==x_s[j+n_s])&&(x_s[i+2*n_s]==x_s[j+2*n_s]))||
+			    ((dim==2)&&(x_s[i]==x_s[j])&&(x_s[i+n_s]==x_s[j+n_s]))||
+			    ((dim==1)&&(x_s[i]==x_s[j])))
 			{
 				fprintf(stdout,
 		      		"ERROR: particle %d has coincident coordinates with partcile %d!"
@@ -6600,7 +6603,7 @@ int main(int argc,char *argv[])
 		}
 		count_rb_b=count_rb_b+rb_b[i];
 	}
-		
+
   	/* rigid bodies
 	-> COG, N1, N2, N3 must be defined in advance otherwise boundary conditions cannot be applied
 	-> COG, N1, N2, N3 must be particles or element nodes as free nodes are removed 
@@ -6876,7 +6879,7 @@ int main(int argc,char *argv[])
 		}
 
 		/* test of N2 existence among particles */
-		if (dim>2)
+		if (dim>1)
 		{
 			inode=0;
 			for (j=0;j<n_s;j++)
@@ -7017,7 +7020,7 @@ int main(int argc,char *argv[])
 	for (i=0;i<n_r;i++)
 	{
 		/* test on coincidence between centre of gravity and principal axes particles or nodes */
-	   	if (COG_r[i]==N1_r[i])
+	   	if ((dim>1)&&(COG_r[i]==N1_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: centre of gravity %d of rigid body %d is coincident with first principal axis node %d!"
@@ -7030,7 +7033,7 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 		
-		if (COG_r[i]==N2_r[i])
+		if ((dim>1)&&(COG_r[i]==N2_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: centre of gravity %d of rigid body %d is coincident with second principal axis node %d!"
@@ -7043,7 +7046,7 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 		
-		if (COG_r[i]==N3_r[i])
+		if ((dim>2)&&(COG_r[i]==N3_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: centre of gravity %d of rigid body %d is coincident with third principal axis node %d!"
@@ -7055,8 +7058,8 @@ int main(int argc,char *argv[])
 				COG_r[i],num_r[i],N3_r[i]);
 			return(0);
 		}
-		
-		if (N1_r[i]==N2_r[i])
+
+		if ((dim>1)&&(N1_r[i]==N2_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: first principal axis node %d of rigid body %d is coincident with second principal axis node %d!"
@@ -7069,7 +7072,7 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 		
-		if (N1_r[i]==N3_r[i])
+		if ((dim>2)&&(N1_r[i]==N3_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: first principal axis node %d of rigid body %d is coincident with third principal axis node %d!"
@@ -7082,7 +7085,7 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 		
-		if (N2_r[i]==N3_r[i])
+		if ((dim>2)&&(N2_r[i]==N3_r[i]))
 		{
 			fprintf(stdout,
 				"ERROR: second principal axis node %d of rigid body %d is coincident with third principal axis node %d!"
@@ -7120,77 +7123,86 @@ int main(int argc,char *argv[])
 			return(0);
 		}
 		
-		if (N1_r_type[i]) // particle
+		if (dim>1)
 		{
-			j=num_s[N1_r[i]];
-			k=mat_s[N1_r[i]];
-		}
-		else // node
-		{
-			j=num_b[N1_r[i]];
-			k=mat_b[N1_r[i]];
+			if (N1_r_type[i]) // particle
+			{
+				j=num_s[N1_r[i]];
+				k=mat_s[N1_r[i]];
+			}
+			else // node
+			{
+				j=num_b[N1_r[i]];
+				k=mat_b[N1_r[i]];
+			}
+
+			if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
+			{
+				fprintf(stdout,
+					"ERROR: first principal axis node %d of rigid body %d has not rigid body material %d!"
+					"\n"
+					"\n"
+					"error termination"
+					"\n"
+					"\n",
+					j,num_r[i],mat_r[i]);
+				return(0);
+			}
 		}
 
-		if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
+		if (dim>1)
 		{
-			fprintf(stdout,
-				"ERROR: first principal axis node %d of rigid body %d has not rigid body material %d!"
-				"\n"
-				"\n"
-				"error termination"
-				"\n"
-				"\n",
-				j,num_r[i],mat_r[i]);
-			return(0);
+			if (N2_r_type[i]) // particle
+			{
+				j=num_s[N2_r[i]];
+				k=mat_s[N2_r[i]];
+			}
+			else // node
+			{
+				j=num_b[N2_r[i]];
+				k=mat_b[N2_r[i]];
+			}
+			
+			if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
+			{
+				fprintf(stdout,
+					"ERROR: second principal axis node %d of rigid body %d has not rigid body material %d!"
+					"\n"
+					"\n"
+					"error termination"
+					"\n"
+					"\n",
+					j,num_r[i],mat_r[i]);
+				return(0);
+			}
 		}
 
-		if (N2_r_type[i]) // particle
+		if (dim>2)
 		{
-			j=num_s[N2_r[i]];
-			k=mat_s[N2_r[i]];
+			if (N3_r_type[i]) // particle
+			{
+				j=num_s[N3_r[i]];
+				k=mat_s[N3_r[i]];
+			}
+			else // node
+			{
+				j=num_b[N3_r[i]];
+				k=mat_b[N3_r[i]];
+			}
+			
+			if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
+			{
+				fprintf(stdout,
+					"ERROR: third principal axis node %d of rigid body %d has not rigid body material %d!"
+					"\n"
+					"\n"
+					"error termination"
+					"\n"
+					"\n",
+					j,num_r[i],mat_r[i]);
+				return(0);
+			}
 		}
-		else // node
-		{
-			j=num_b[N2_r[i]];
-			k=mat_b[N2_r[i]];
-		}
-		
-		if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
-		{
-			fprintf(stdout,
-				"ERROR: second principal axis node %d of rigid body %d has not rigid body material %d!"
-				"\n"
-				"\n"
-				"error termination"
-				"\n"
-				"\n",
-				j,num_r[i],mat_r[i]);
-			return(0);
-		}
-
-		if (N3_r_type[i]) // particle
-		{
-			j=num_s[N3_r[i]];
-			k=mat_s[N3_r[i]];
-		}
-		else // node
-		{
-			j=num_b[N3_r[i]];
-			k=mat_b[N3_r[i]];
-		}
-		
-		if ((num_m[k]!=mat_r[i])&&(k!=-1)) // -1 for free nodes without material affiliation
-		{
-			fprintf(stdout,
-				"ERROR: third principal axis node %d of rigid body %d has not rigid body material %d!"
-				"\n"
-				"\n"
-				"error termination"
-				"\n"
-				"\n",
-				j,num_r[i],mat_r[i]);
-			return(0);
-		}	
 	}
 
 	/* check on principal inertia axes */
