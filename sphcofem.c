@@ -12,11 +12,12 @@ https://github.com/orgs/SPHCOFEM
 */
 
 /* ToDo
+-> Wendland C2 kernel function
 -> rotation velocity (matrix multiplication) -> updated Lagrangean
 -> null material for FEM (for contact and filling purposes)
 -> hyperelastic material
 -> contact damping
--> nodal added mass (to particles and nodes)
+-> nodal added mass (AMASS to particles and nodes)
 -> kinematic contact (just move particles)
 -> test triangles and quads in 2D
 -> rigid body element volume in 3D (mark difference between rectangle and tetrahedron)
