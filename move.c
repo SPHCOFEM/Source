@@ -1609,12 +1609,18 @@ void move(int *num_m,int *type_m,
 		phi=psi_r[i+2*n_r]-psi_r_0[i+2*n_r];
 
 		fprintf(stdout,"%f: %f, %f, %f\n",t,psi,theta,phi);
+		/*
+		fprintf(stdout,"-> x: %f, %f, %f\n",urx,ury,urz);
+		fprintf(stdout,"-> y: %f, %f, %f\n",vrx,vry,vrz);
+		fprintf(stdout,"-> z: %f, %f, %f\n",wrx,wry,wrz);
+		*/
 		
 		/* rotation matrices 
 		R=createMemMore(double,9);
 		RO=createMemMore(double,9);
 		ROO=createMemMore(double,9);
 		*/
+	
 		spatial_rotation(dim,R,RO,ROO,
 			psi,theta,phi, // rotations
 			o_r[i],o_r[i+n_r],o_r[i+2*n_r], // anglular velocities
